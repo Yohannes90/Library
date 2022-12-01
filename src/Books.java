@@ -2,7 +2,7 @@ public class Books {
     String[] bookList;
     int capacity;
 
-    void catagoryCapacity() {
+    void categoryCapacity() {
         bookList = new String[capacity];
     }
 
@@ -11,15 +11,20 @@ public class Books {
         System.out.println(bookName + " is added to inventory!");
     }
 
-    public void lendBook(int bookCode, String bookName) {
-        bookList[bookCode] = null;
-        for(int i = 0;i<=bookList.length-1;i++) {
-            if (bookName == bookList[i]){
-                System.out.println("Books is available; Please bring identification");
-            }else
-                System.out.println("We don't have "+bookName+" currently please check another time!");
+    public void lendBook(String bookName) {
 
+        for(int i = 0;i < bookList.length;i++) {
+            boolean isAvailable = bookName.equalsIgnoreCase(bookList[i]);
+            if (isAvailable) {
+                System.out.println(bookName + " is available; Please provide identification for assurance!");
+                bookList[i] = null;
+                break;
+            }
+            else if (i == bookList.length - 1){
+                System.out.println("We don't have " + bookName + " currently on stock please check another time!");
+            }
         }
+
     }
 
     public void returnedBook(int bookCode, String bookName){
@@ -32,7 +37,14 @@ public class Books {
         System.out.println("new book"+ bookName +" has been added to stock!");
     }
 
-    public int totalBooksInStock() {
-        return bookList.length;
+    public void totalBooksInStock() {
+        int count = 0;
+        for(int i = 0; i < bookList.length; i++){
+            if (bookList[i] == null)
+                count++;
+        }
+            System.out.println(bookList.length-count);
+
     }
+
 }
